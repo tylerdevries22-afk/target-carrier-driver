@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, RefreshControl } 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { Truck, MapPin, Package, User, Clock, AlertCircle } from 'lucide-react-native';
+import { Truck, MapPin, Package, User, Clock, AlertCircle, Calendar, Timer, Navigation } from 'lucide-react-native';
 import type { RootStackParamList } from '../App';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -25,7 +25,6 @@ export default function DriverHome() {
 
   const loadData = async () => {
     try {
-      // In production, fetch from /api/shipments?driverId=XYZ
       setActiveShipment(null);
     } finally {
       setRefreshing(false);
@@ -72,11 +71,25 @@ export default function DriverHome() {
           <View style={styles.emptyCard}>
             <AlertCircle size={24} color="#64748b" />
             <Text style={styles.emptyText}>No active load assigned</Text>
-            <Text style={styles.emptySub}>Check back when dispatch assigns a load</Text>
+            <Text style={styles.emptySub}>Check your schedule for upcoming loads</Text>
           </View>
         )}
 
         <View style={styles.grid}>
+          <TouchableOpacity style={styles.gridItem} onPress={() => navigation.navigate('Schedule')}>
+            <View style={[styles.iconBox, { backgroundColor: 'rgba(59,130,246,0.1)' }]}>
+              <Calendar size={24} color="#3b82f6" />
+            </View>
+            <Text style={styles.gridLabel}>My Schedule</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.gridItem} onPress={() => navigation.navigate('ActiveShipment')}>
+            <View style={[styles.iconBox, { backgroundColor: 'rgba(34,197,94,0.1)' }]}>
+              <Truck size={24} color="#22c55e" />
+            </View>
+            <Text style={styles.gridLabel}>Active Load</Text>
+          </TouchableOpacity>
+
           <TouchableOpacity style={styles.gridItem} onPress={() => navigation.navigate('LocationTracker')}>
             <View style={[styles.iconBox, { backgroundColor: 'rgba(96,165,250,0.1)' }]}>
               <MapPin size={24} color="#60a5fa" />
@@ -84,25 +97,25 @@ export default function DriverHome() {
             <Text style={styles.gridLabel}>GPS Tracking</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.gridItem} onPress={() => navigation.navigate('ActiveShipment')}>
-            <View style={[styles.iconBox, { backgroundColor: 'rgba(34,197,94,0.1)' }]}>
-              <Truck size={24} color="#22c55e" />
+          <TouchableOpacity style={styles.gridItem} onPress={() => navigation.navigate('HoursOfService')}>
+            <View style={[styles.iconBox, { backgroundColor: 'rgba(245,158,11,0.1)' }]}>
+              <Timer size={24} color="#f59e0b" />
             </View>
-            <Text style={styles.gridLabel}>My Loads</Text>
+            <Text style={styles.gridLabel}>Hours of Service</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.gridItem} onPress={() => navigation.navigate('RoutePlanner', { shipmentId: 1 })}>
+            <View style={[styles.iconBox, { backgroundColor: 'rgba(168,85,247,0.1)' }]}>
+              <Navigation size={24} color="#a855f7" />
+            </View>
+            <Text style={styles.gridLabel}>Route Plan</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.gridItem} onPress={() => navigation.navigate('Profile')}>
-            <View style={[styles.iconBox, { backgroundColor: 'rgba(168,85,247,0.1)' }]}>
-              <User size={24} color="#a855f7" />
+            <View style={[styles.iconBox, { backgroundColor: 'rgba(236,72,153,0.1)' }]}>
+              <User size={24} color="#ec4899" />
             </View>
             <Text style={styles.gridLabel}>Profile</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.gridItem}>
-            <View style={[styles.iconBox, { backgroundColor: 'rgba(245,158,11,0.1)' }]}>
-              <Clock size={24} color="#f59e0b" />
-            </View>
-            <Text style={styles.gridLabel}>Hours of Service</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

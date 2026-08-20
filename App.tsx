@@ -7,6 +7,9 @@ import ActiveShipment from './screens/ActiveShipment';
 import LocationTracker from './screens/LocationTracker';
 import ShipmentDetail from './screens/ShipmentDetail';
 import Profile from './screens/Profile';
+import Schedule from './screens/Schedule';
+import HoursOfService from './screens/HoursOfService';
+import RoutePlanner from './screens/RoutePlanner';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -14,6 +17,9 @@ export type RootStackParamList = {
   LocationTracker: undefined;
   ShipmentDetail: { shipmentId: number };
   Profile: undefined;
+  Schedule: undefined;
+  HoursOfService: undefined;
+  RoutePlanner: { shipmentId: number };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -36,9 +42,12 @@ export default function App() {
           }}
         >
           <Stack.Screen name="Home" component={DriverHome} options={{ title: 'Target Carrier' }} />
+          <Stack.Screen name="Schedule" component={Schedule} options={{ title: 'My Schedule' }} />
           <Stack.Screen name="ActiveShipment" component={ActiveShipment} options={{ title: 'Active Load' }} />
           <Stack.Screen name="LocationTracker" component={LocationTracker} options={{ title: 'GPS Tracking' }} />
+          <Stack.Screen name="RoutePlanner" component={RoutePlanner} options={{ title: 'Route Plan' }} />
           <Stack.Screen name="ShipmentDetail" component={ShipmentDetail} options={{ title: 'Load Details' }} />
+          <Stack.Screen name="HoursOfService" component={HoursOfService} options={{ title: 'Hours of Service' }} />
           <Stack.Screen name="Profile" component={Profile} options={{ title: 'Driver Profile' }} />
         </Stack.Navigator>
       </NavigationContainer>
